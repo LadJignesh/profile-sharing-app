@@ -1,22 +1,43 @@
+# Dependencies
 node_modules
-npm-debug.log
+npm-debug.log*
+
+# Testing
+coverage
+.nyc_output
+*.spec.ts
+*.e2e-spec.ts
+
+# IDEs and editors
+.vscode
+.idea
+*.swp
+*.swo
+
+# Source files (not needed in production build)
+src
+e2e
+
+# Configuration files (not needed in container)
 .git
 .gitignore
 README.md
 .env
-.nyc_output
-coverage
-.nyc_output
-.coverage
-.vscode
-src
-e2e
-*.spec.ts
-*.e2e-spec.ts
-.angular
-.vscode
+.env.local
+.env.production
 .editorconfig
 karma.conf.js
 tsconfig*.json
 angular.json
 .browserslistrc
+
+# Build artifacts
+.angular
+
+# Logs
+logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db

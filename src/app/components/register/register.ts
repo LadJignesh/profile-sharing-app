@@ -70,8 +70,19 @@ export class RegisterComponent {
     }
   }
 
+  onInputChange(field: string, event: Event) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value || '';
+    this.updateRegisterData(field, value);
+  }
+
   updateRegisterData(field: string, value: string) {
-    this.registerData.update(current => ({ ...current, [field]: value }));
+    this.registerData.update(data => ({
+      ...data,
+      [field]: value
+    }));
+    // Clear error when user starts typing
+    this.error.set(null);
   }
 
   private isValidEmail(email: string): boolean {

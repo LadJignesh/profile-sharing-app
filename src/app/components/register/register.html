@@ -18,7 +18,7 @@
           type="text"
           id="username"
           [value]="registerData().username"
-          (input)="updateRegisterData('username', $event.target.value || '')"
+          (input)="onInputChange('username', $event)"
           placeholder="Enter your username"
           [disabled]="isLoading()"
           required>
@@ -30,7 +30,7 @@
           type="email"
           id="email"
           [value]="registerData().email"
-          (input)="updateRegisterData('email', $event.target.value || '')"
+          (input)="onInputChange('email', $event)"
           placeholder="Enter your email"
           [disabled]="isLoading()"
           required>
@@ -42,7 +42,7 @@
           type="password"
           id="password"
           [value]="registerData().password"
-          (input)="updateRegisterData('password', $event.target.value || '')"
+          (input)="onInputChange('password', $event)"
           placeholder="Enter your password"
           [disabled]="isLoading()"
           required>
@@ -55,7 +55,7 @@
           type="password"
           id="confirmPassword"
           [value]="registerData().confirmPassword"
-          (input)="updateRegisterData('confirmPassword', $event.target.value || '')"
+          (input)="onInputChange('confirmPassword', $event)"
           placeholder="Confirm your password"
           [disabled]="isLoading()"
           required>
