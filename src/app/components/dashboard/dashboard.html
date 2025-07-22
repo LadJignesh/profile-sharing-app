@@ -1,0 +1,153 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Profile Dashboard</h1>
+      <div class="header-actions">
+        <span class="welcome-text">Welcome, {{ currentUser()?.username }}!</span>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-content">
+    @if (isLoading()) {
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Loading your dashboard...</p>
+      </div>
+    } @else {
+      <!-- User's Main Profile Section -->
+      <section class="profile-section">
+        <div class="section-header">
+          <h2>Your Profile</h2>
+          @if (!hasUserProfile()) {
+            <button class="create-profile-btn" (click)="goToCreateProfile()">
+              Create Profile
+            </button>
+          }
+        </div>
+
+        @if (hasUserProfile()) {
+          <div class="main-profile-card">
+            <div class="profile-info">
+              <div class="profile-details">
+                <h3>{{ userMainProfile()?.name }}</h3>
+                <p class="profile-title">{{ userMainProfile()?.title }}</p>
+                <p class="profile-company">{{ userMainProfile()?.company }}</p>
+                <div class="profile-contact">
+                  @if (userMainProfile()?.email) {
+                    <span class="contact-item">{{ userMainProfile()?.email }}</span>
+                  }
+                  @if (userMainProfile()?.phone) {
+                    <span class="contact-item">{{ userMainProfile()?.phone }}</span>
+                  }
+                </div>
+              </div>
+              
+              @if (userMainProfile()?.qrCode) {
+                <div class="qr-code-container">
+                  <img [src]="userMainProfile()?.qrCode" alt="Profile QR Code" class="qr-code">
+                  <p class="qr-description">Share this QR code with others</p>
+                </div>
+              }
+            </div>
+
+            <div class="profile-actions">
+              <button 
+                class="action-btn primary" 
+                (click)="viewProfile(userMainProfile()!.id)">
+                View Details
+              </button>
+              <button class="action-btn secondary" (click)="goToCreateProfile()">
+                Edit Profile
+              </button>
+            </div>
+          </div>
+        } @else {
+          <div class="empty-profile-state">
+            <div class="empty-icon">👤</div>
+            <h3>Create Your Profile</h3>
+            <p>Start by creating your profile to share with others</p>
+            <button class="create-profile-btn large" (click)="goToCreateProfile()">
+              Create Your First Profile
+            </button>
+          </div>
+        }
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="actions-section">
+        <h2>Quick Actions</h2>
+        <div class="action-cards">
+          <div class="action-card" (click)="goToQrScanner()">
+            <div class="action-icon">📱</div>
+            <h3>Scan QR Code</h3>
+            <p>Add new profiles by scanning QR codes</p>
+          </div>
+          
+          <div class="action-card" (click)="goToCreateProfile()">
+            <div class="action-icon">➕</div>
+            <h3>Create Profile</h3>
+            <p>Create a new profile to share</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shared Profiles Section -->
+      <section class="shared-profiles-section">
+        <div class="section-header">
+          <h2>Shared Profiles</h2>
+          <span class="profile-count">{{ sharedProfiles().length }} profiles</span>
+        </div>
+
+        @if (hasSharedProfiles()) {
+          <div class="profiles-grid">
+            @for (profile of sharedProfiles(); track profile.id) {
+              <div class="profile-card">
+                <div class="profile-card-header">
+                  <h4>{{ profile.name }}</h4>
+                  <div class="profile-card-actions">
+                    <button 
+                      class="card-action-btn view" 
+                      (click)="viewProfile(profile.id)"
+                      title="View Profile">
+                      👁️
+                    </button>
+                    <button 
+                      class="card-action-btn delete" 
+                      (click)="deleteSharedProfile(profile.id)"
+                      title="Remove Profile">
+                      🗑️
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="profile-card-content">
+                  @if (profile.title) {
+                    <p class="card-title">{{ profile.title }}</p>
+                  }
+                  @if (profile.company) {
+                    <p class="card-company">{{ profile.company }}</p>
+                  }
+                  @if (profile.email) {
+                    <p class="card-email">{{ profile.email }}</p>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty-shared-state">
+            <div class="empty-icon">📋</div>
+            <h3>No Shared Profiles Yet</h3>
+            <p>Scan QR codes to add profiles from other users</p>
+            <button class="scan-btn" (click)="goToQrScanner()">
+              Scan Your First QR Code
+            </button>
+          </div>
+        }
+      </section>
+    }
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="profile-list-container">
+  <div class="header">
+    <h1>Profile Manager</h1>
+    <div class="action-buttons">
+      <button class="btn-primary" (click)="navigateToCreate()">
+        📝 Create Profile
+      </button>
+      <button class="btn-secondary" (click)="navigateToScanner()">
+        📱 Scan QR Code
+      </button>
+    </div>
+  </div>
+
+  <!-- Profiles Section -->
+  <div class="profiles-section">
+    <div class="section-header">
+      <h2>All Profiles ({{ profiles().length }})</h2>
+    </div>
+
+    <div class="empty-state" *ngIf="!hasProfiles()">
+      <div class="empty-icon">👤</div>
+      <h3>No Profiles Yet</h3>
+      <p>Create your first profile or scan someone's QR code to get started</p>
+      <div class="empty-actions">
+        <button class="btn-primary" (click)="navigateToCreate()">
+          Create Your Profile
+        </button>
+        <button class="btn-outline" (click)="navigateToScanner()">
+          Scan QR Code
+        </button>
+      </div>
+    </div>
+
+    <div class="profiles-grid" *ngIf="hasProfiles()">
+      <div 
+        class="profile-card" 
+        *ngFor="let profile of profiles()"
+        (click)="navigateToProfile(profile)"
+        [class.current-user]="currentUser()?.id === profile.id">
+        
+        <div class="profile-header">
+          <div class="avatar">{{ profile.name.charAt(0).toUpperCase() }}</div>
+          <div class="profile-actions">
+            <button 
+              class="action-btn delete" 
+              (click)="deleteProfile(profile, $event)"
+              title="Delete profile">
+              🗑️
+            </button>
+          </div>
+        </div>
+
+        <div class="profile-content">
+          <h3>{{ profile.name }}</h3>
+          <p class="email">{{ profile.email }}</p>
+          <p class="phone" *ngIf="profile.phone">📞 {{ profile.phone }}</p>
+          <p class="company" *ngIf="profile.company">
+            🏢 {{ profile.title }} at {{ profile.company }}
+          </p>
+          <p class="created-date">
+            Created: {{ profile.createdAt | date:'short' }}
+          </p>
+        </div>
+
+        <div class="profile-footer">
+          <span class="view-details">View Details →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

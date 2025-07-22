@@ -1,0 +1,149 @@
+<div class="profile-create-container">
+  <div class="card" *ngIf="!createdProfile()">
+    <div class="card-header">
+      <div class="header-top">
+        <button class="back-btn" (click)="navigateToDashboard()">← Back to Dashboard</button>
+      </div>
+      <h2>Create Your Profile</h2>
+      <p>Fill in your details to create a shareable profile with QR code</p>
+    </div>
+    
+    <form (ngSubmit)="onSubmit()" class="profile-form">
+      <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input 
+          type="text" 
+          id="name"
+          [value]="profile().name"
+          (input)="updateProfile('name', $any($event.target).value)"
+          placeholder="Enter your full name"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input 
+          type="email" 
+          id="email"
+          [value]="profile().email"
+          (input)="updateProfile('email', $any($event.target).value)"
+          placeholder="Enter your email"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input 
+          type="tel" 
+          id="phone"
+          [value]="profile().phone"
+          (input)="updateProfile('phone', $any($event.target).value)"
+          placeholder="Enter your phone number">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input 
+            type="text" 
+            id="company"
+            [value]="profile().company"
+            (input)="updateProfile('company', $any($event.target).value)"
+            placeholder="Company name">
+        </div>
+
+        <div class="form-group">
+          <label for="title">Job Title</label>
+          <input 
+            type="text" 
+            id="title"
+            [value]="profile().title"
+            (input)="updateProfile('title', $any($event.target).value)"
+            placeholder="Your job title">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="bio">Bio</label>
+        <textarea 
+          id="bio"
+          [value]="profile().bio"
+          (input)="updateProfile('bio', $any($event.target).value)"
+          placeholder="Tell us about yourself"
+          rows="3"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="website">Website</label>
+        <input 
+          type="url" 
+          id="website"
+          [value]="profile().website"
+          (input)="updateProfile('website', $any($event.target).value)"
+          placeholder="https://yourwebsite.com">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="linkedin">LinkedIn</label>
+          <input 
+            type="url" 
+            id="linkedin"
+            [value]="profile().linkedin"
+            (input)="updateProfile('linkedin', $any($event.target).value)"
+            placeholder="LinkedIn profile URL">
+        </div>
+
+        <div class="form-group">
+          <label for="twitter">Twitter</label>
+          <input 
+            type="url" 
+            id="twitter"
+            [value]="profile().twitter"
+            (input)="updateProfile('twitter', $any($event.target).value)"
+            placeholder="Twitter profile URL">
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="isLoading()">
+        <span *ngIf="isLoading()">Creating Profile...</span>
+        <span *ngIf="!isLoading()">Create Profile</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Success view with QR code -->
+  <div class="success-card" *ngIf="createdProfile()">
+    <div class="success-header">
+      <div class="success-icon">✅</div>
+      <h2>Profile Created Successfully!</h2>
+      <p>Your profile has been created with a QR code for easy sharing</p>
+      <p class="redirect-notice">Redirecting to dashboard in a moment...</p>
+    </div>
+
+    <div class="profile-preview">
+      <div class="profile-info">
+        <h3>{{ createdProfile()?.name }}</h3>
+        <p class="email">{{ createdProfile()?.email }}</p>
+        <p class="phone" *ngIf="createdProfile()?.phone">{{ createdProfile()?.phone }}</p>
+        <p class="company" *ngIf="createdProfile()?.company">
+          {{ createdProfile()?.title }} at {{ createdProfile()?.company }}
+        </p>
+      </div>
+
+      <div class="qr-code-section">
+        <h4>Your QR Code</h4>
+        <div class="qr-code-container">
+          <img [src]="createdProfile()?.qrCode" alt="Profile QR Code" class="qr-code">
+        </div>
+        <p class="qr-instruction">Others can scan this code to add your profile</p>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn-secondary" (click)="navigateToDashboard()">
+        Go to Dashboard Now
+      </button>
+    </div>
+  </div>
+</div>

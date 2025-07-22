@@ -1,0 +1,124 @@
+<div class="profile-detail-container" *ngIf="profile()">
+  <div class="profile-card">
+    <!-- Header with avatar and basic info -->
+    <div class="profile-header" [class.current-user-header]="isOwner()">
+      <div class="profile-avatar">
+        {{ profile()!.name.charAt(0).toUpperCase() }}
+      </div>
+      <div class="profile-basic-info">
+        <h1>{{ profile()!.name }}</h1>
+        <p class="profile-title" *ngIf="profile()!.title || profile()!.company">
+          <span *ngIf="profile()!.title">{{ profile()!.title }}</span>
+          <span *ngIf="profile()!.title && profile()!.company"> at </span>
+          <span *ngIf="profile()!.company">{{ profile()!.company }}</span>
+        </p>
+        <div class="profile-badges">
+          <span class="badge current-user" *ngIf="isOwner()">Your Profile</span>
+          <span class="badge created-date">Created {{ profile()!.createdAt | date:'mediumDate' }}</span>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button 
+          class="action-btn delete" 
+          *ngIf="isOwner()"
+          (click)="deleteProfile()"
+          title="Delete profile">
+          🗑️
+        </button>
+      </div>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="profile-content">
+      <div class="contact-section">
+        <h2>Contact Information</h2>
+        <div class="contact-grid">
+          <div class="contact-item clickable" (click)="openEmail()">
+            <div class="contact-icon">📧</div>
+            <div class="contact-info">
+              <span class="contact-label">Email</span>
+              <span class="contact-value">{{ profile()!.email }}</span>
+            </div>
+          </div>
+
+          <div class="contact-item clickable" *ngIf="profile()!.phone" (click)="openPhone()">
+            <div class="contact-icon">📞</div>
+            <div class="contact-info">
+              <span class="contact-label">Phone</span>
+              <span class="contact-value">{{ profile()!.phone }}</span>
+            </div>
+          </div>
+
+          <div class="contact-item clickable" *ngIf="profile()!.website" (click)="openWebsite()">
+            <div class="contact-icon">🌐</div>
+            <div class="contact-info">
+              <span class="contact-label">Website</span>
+              <span class="contact-value">{{ profile()!.website }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bio Section -->
+      <div class="bio-section" *ngIf="profile()!.bio">
+        <h2>About</h2>
+        <p class="bio-text">{{ profile()!.bio }}</p>
+      </div>
+
+      <!-- Social Links -->
+      <div class="social-section" *ngIf="profile()!.linkedin || profile()!.twitter">
+        <h2>Social Links</h2>
+        <div class="social-links">
+          <button class="social-link linkedin" *ngIf="profile()!.linkedin" (click)="openLinkedIn()">
+            <span class="social-icon">💼</span>
+            LinkedIn
+          </button>
+          <button class="social-link twitter" *ngIf="profile()!.twitter" (click)="openTwitter()">
+            <span class="social-icon">🐦</span>
+            Twitter
+          </button>
+        </div>
+      </div>
+
+      <!-- QR Code Section -->
+      <div class="qr-section" *ngIf="profile()!.qrCode">
+        <h2>QR Code</h2>
+        <div class="qr-container">
+          <div class="qr-code-wrapper">
+            <img [src]="profile()!.qrCode" [alt]="profile()!.name + ' QR Code'" class="qr-code">
+          </div>
+          <p class="qr-description">
+            Share this QR code for others to quickly add your contact information
+          </p>
+          <div class="qr-actions">
+            <button class="btn-secondary" (click)="downloadQR()">
+              💾 Download QR Code
+            </button>
+            <button class="btn-outline" (click)="shareProfile()" *ngIf="canShare()">
+              📤 Share Profile
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="profile-footer">
+      <button class="btn-primary" (click)="navigateToDashboard()">>
+        ← Back to Profiles
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Not Found -->
+<div class="not-found" *ngIf="!profile()">
+  <div class="not-found-content">
+    <div class="not-found-icon">❓</div>
+    <h2>Profile Not Found</h2>
+    <p>The profile you're looking for doesn't exist or has been deleted.</p>
+    <button class="btn-primary" (click)="navigateToDashboard()">>
+      Go to Profiles
+    </button>
+  </div>
+</div>
