@@ -61,7 +61,7 @@
     "@angular/build": "^19.0.0",
     "@angular/cli": "^19.0.0",
     "@angular/compiler-cli": "^19.0.0",
-    "@netlify/angular-runtime": "^2.4.0",
+    "@netlify/angular-runtime": "^2.3.0",
     "@types/express": "^4.17.21",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
