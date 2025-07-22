@@ -11,6 +11,7 @@
 
 [functions]
   directory = "dist/profiles-sharing-app/server"
+  node_bundler = "esbuild"
 
 [[headers]]
   for = "/*"

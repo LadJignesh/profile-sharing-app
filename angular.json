@@ -89,6 +89,9 @@
               "sourceMap": false,
               "extractLicenses": true,
               "namedChunks": false,
+              "ssr": {
+                "entry": "src/server.netlify.ts"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
