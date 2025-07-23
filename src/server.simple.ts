@@ -10,8 +10,15 @@ const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 /**
- * Health check endpoint
+ * Example Express Rest API endpoints can be defined here.
+ * Uncomment and define endpoints as necessary.
+ *
+ * app.get('/api/**', (req, res) => {
+ *   // Handle API routes
+ * });
  */
+
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'OK', 
@@ -20,17 +27,13 @@ app.get('/health', (req, res) => {
   });
 });
 
-/**
- * Serve static files from /browser
- */
+// Serve static files from /browser
 app.use(express.static(join(__dirname, '../browser'), {
   maxAge: '1y',
   index: false,
 }));
 
-/**
- * All regular routes use the Angular Universal engine
- */
+// All regular routes use the Angular Universal engine
 app.use('*', (req, res, next) => {
   angularApp
     .handle(req)
@@ -46,6 +49,7 @@ app.use('*', (req, res, next) => {
 
 /**
  * Start the server if this module is the main entry point.
+ * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
  */
 if (isMainModule(import.meta.url)) {
   const port = process.env['PORT'] || 4000;
@@ -55,6 +59,6 @@ if (isMainModule(import.meta.url)) {
 }
 
 /**
- * Request handler for Angular CLI
+ * The request handler used by the Angular CLI (dev-server and during build).
  */
 export const reqHandler = createNodeRequestHandler(app);

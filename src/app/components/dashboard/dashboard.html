@@ -20,131 +20,218 @@
       <!-- User's Main Profile Section -->
       <section class="profile-section">
         <div class="section-header">
-          <h2>Your Profile</h2>
+          <div class="header-title">
+            <h2>✨ Create Your Profile</h2>
+            <p class="section-subtitle">Build your digital identity and share it with the world</p>
+          </div>
           @if (!hasUserProfile()) {
-            <button class="create-profile-btn" (click)="goToCreateProfile()">
-              Create Profile
+            <button class="create-profile-btn gradient-btn" (click)="goToCreateProfile()">
+              <span class="btn-icon">🚀</span>
+              <span>Create Profile</span>
             </button>
           }
         </div>
 
         @if (hasUserProfile()) {
-          <div class="main-profile-card">
+          <div class="main-profile-card modern-card">
+            <div class="card-ribbon">Your Profile</div>
             <div class="profile-info">
               <div class="profile-details">
-                <h3>{{ userMainProfile()?.name }}</h3>
-                <p class="profile-title">{{ userMainProfile()?.title }}</p>
-                <p class="profile-company">{{ userMainProfile()?.company }}</p>
-                <div class="profile-contact">
-                  @if (userMainProfile()?.email) {
-                    <span class="contact-item">{{ userMainProfile()?.email }}</span>
-                  }
-                  @if (userMainProfile()?.phone) {
-                    <span class="contact-item">{{ userMainProfile()?.phone }}</span>
-                  }
+                <div class="profile-avatar">
+                  <div class="avatar-circle">
+                    {{ userMainProfile()!.name.charAt(0) }}
+                  </div>
+                  <div class="status-indicator active"></div>
+                </div>
+                <div class="profile-text">
+                  <h3>{{ userMainProfile()?.name }}</h3>
+                  <p class="profile-title">{{ userMainProfile()?.title }}</p>
+                  <p class="profile-company">🏢 {{ userMainProfile()?.company }}</p>
+                  <div class="profile-contact">
+                    @if (userMainProfile()?.email) {
+                      <span class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        {{ userMainProfile()?.email }}
+                      </span>
+                    }
+                    @if (userMainProfile()?.phone) {
+                      <span class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        {{ userMainProfile()?.phone }}
+                      </span>
+                    }
+                  </div>
                 </div>
               </div>
               
               @if (userMainProfile()?.qrCode) {
-                <div class="qr-code-container">
-                  <img [src]="userMainProfile()?.qrCode" alt="Profile QR Code" class="qr-code">
-                  <p class="qr-description">Share this QR code with others</p>
+                <div class="qr-code-container modern-qr">
+                  <div class="qr-frame">
+                    <img [src]="userMainProfile()?.qrCode" alt="Profile QR Code" class="qr-code">
+                  </div>
+                  <p class="qr-description">📲 Scan to connect instantly</p>
                 </div>
               }
             </div>
 
             <div class="profile-actions">
               <button 
-                class="action-btn primary" 
+                class="action-btn primary modern-btn" 
                 (click)="viewProfile(userMainProfile()!.id)">
+                <span class="btn-icon">👁️</span>
                 View Details
               </button>
-              <button class="action-btn secondary" (click)="goToCreateProfile()">
+              <button class="action-btn secondary modern-btn" (click)="goToCreateProfile()">
+                <span class="btn-icon">✏️</span>
                 Edit Profile
               </button>
             </div>
           </div>
         } @else {
-          <div class="empty-profile-state">
-            <div class="empty-icon">👤</div>
-            <h3>Create Your Profile</h3>
-            <p>Start by creating your profile to share with others</p>
-            <button class="create-profile-btn large" (click)="goToCreateProfile()">
-              Create Your First Profile
-            </button>
+          <div class="empty-profile-state modern-empty">
+            <div class="empty-illustration">
+              <div class="profile-placeholder">
+                <div class="placeholder-avatar">👤</div>
+                <div class="placeholder-lines">
+                  <div class="line"></div>
+                  <div class="line short"></div>
+                  <div class="line medium"></div>
+                </div>
+              </div>
+            </div>
+            <div class="empty-content">
+              <h3>Ready to Get Started?</h3>
+              <p>Create your digital profile in minutes and start networking like a pro! ✨</p>
+              <button class="create-profile-btn large gradient-btn pulse" (click)="goToCreateProfile()">
+                <span class="btn-icon">🚀</span>
+                Create Your First Profile
+              </button>
+            </div>
           </div>
         }
       </section>
 
       <!-- Quick Actions -->
       <section class="actions-section">
-        <h2>Quick Actions</h2>
-        <div class="action-cards">
-          <div class="action-card" (click)="goToQrScanner()">
-            <div class="action-icon">📱</div>
-            <h3>Scan QR Code</h3>
-            <p>Add new profiles by scanning QR codes</p>
+        <div class="section-header modern-header">
+          <div class="header-title">
+            <h2>⚡ Quick Actions</h2>
+            <p class="section-subtitle">Fast-track your networking with these essential tools</p>
+          </div>
+        </div>
+        <div class="action-cards modern-grid">
+          <div class="action-card modern-action-card scan-card" (click)="goToQrScanner()">
+            <div class="card-gradient"></div>
+            <div class="action-icon-container">
+              <div class="action-icon pulse-icon">📱</div>
+              <div class="icon-ring"></div>
+            </div>
+            <div class="card-content">
+              <h3>Scan QR Code</h3>
+              <p>Instantly add new profiles by scanning QR codes</p>
+              <div class="card-arrow">→</div>
+            </div>
+            <div class="card-shine"></div>
           </div>
           
-          <div class="action-card" (click)="goToCreateProfile()">
-            <div class="action-icon">➕</div>
-            <h3>Create Profile</h3>
-            <p>Create a new profile to share</p>
+          <div class="action-card modern-action-card create-card" (click)="goToCreateProfile()">
+            <div class="card-gradient"></div>
+            <div class="action-icon-container">
+              <div class="action-icon pulse-icon">✨</div>
+              <div class="icon-ring"></div>
+            </div>
+            <div class="card-content">
+              <h3>Create Profile</h3>
+              <p>Build a new profile to expand your network</p>
+              <div class="card-arrow">→</div>
+            </div>
+            <div class="card-shine"></div>
           </div>
         </div>
       </section>
 
       <!-- Shared Profiles Section -->
       <section class="shared-profiles-section">
-        <div class="section-header">
-          <h2>Shared Profiles</h2>
-          <span class="profile-count">{{ sharedProfiles().length }} profiles</span>
+        <div class="section-header modern-header">
+          <div class="header-title">
+            <h2>🤝 Shared Profiles</h2>
+            <p class="section-subtitle">Your growing network of connections</p>
+          </div>
+          <div class="profile-stats">
+            <div class="stat-bubble">
+              <span class="stat-number">{{ sharedProfiles().length }}</span>
+              <span class="stat-label">{{ sharedProfiles().length === 1 ? 'Profile' : 'Profiles' }}</span>
+            </div>
+          </div>
         </div>
 
         @if (hasSharedProfiles()) {
-          <div class="profiles-grid">
+          <div class="profiles-grid modern-profiles-grid">
             @for (profile of sharedProfiles(); track profile.id) {
-              <div class="profile-card">
-                <div class="profile-card-header">
-                  <h4>{{ profile.name }}</h4>
+              <div class="profile-card modern-profile-card">
+                <div class="card-header">
+                  <div class="profile-avatar-small">
+                    {{ profile.name.charAt(0) }}
+                  </div>
                   <div class="profile-card-actions">
                     <button 
-                      class="card-action-btn view" 
+                      class="card-action-btn view modern-icon-btn" 
                       (click)="viewProfile(profile.id)"
                       title="View Profile">
-                      👁️
+                      <span class="btn-icon">👁️</span>
                     </button>
                     <button 
-                      class="card-action-btn delete" 
+                      class="card-action-btn delete modern-icon-btn danger" 
                       (click)="deleteSharedProfile(profile.id)"
                       title="Remove Profile">
-                      🗑️
+                      <span class="btn-icon">🗑️</span>
                     </button>
                   </div>
                 </div>
                 
                 <div class="profile-card-content">
+                  <h4>{{ profile.name }}</h4>
                   @if (profile.title) {
-                    <p class="card-title">{{ profile.title }}</p>
+                    <p class="card-title">💼 {{ profile.title }}</p>
                   }
                   @if (profile.company) {
-                    <p class="card-company">{{ profile.company }}</p>
+                    <p class="card-company">🏢 {{ profile.company }}</p>
                   }
                   @if (profile.email) {
-                    <p class="card-email">{{ profile.email }}</p>
+                    <p class="card-email">📧 {{ profile.email }}</p>
                   }
+                </div>
+                
+                <div class="card-footer">
+                  <div class="connection-indicator">
+                    <div class="connection-dot"></div>
+                    <span>Connected</span>
+                  </div>
                 </div>
               </div>
             }
           </div>
         } @else {
-          <div class="empty-shared-state">
-            <div class="empty-icon">📋</div>
-            <h3>No Shared Profiles Yet</h3>
-            <p>Scan QR codes to add profiles from other users</p>
-            <button class="scan-btn" (click)="goToQrScanner()">
-              Scan Your First QR Code
-            </button>
+          <div class="empty-shared-state modern-empty">
+            <div class="empty-illustration">
+              <div class="network-visual">
+                <div class="node center"></div>
+                <div class="node satellite"></div>
+                <div class="node satellite"></div>
+                <div class="node satellite"></div>
+                <div class="connection-line"></div>
+                <div class="connection-line"></div>
+                <div class="connection-line"></div>
+              </div>
+            </div>
+            <div class="empty-content">
+              <h3>Start Building Your Network!</h3>
+              <p>Connect with professionals by scanning their QR codes. Your network is your net worth! 🌟</p>
+              <button class="scan-btn gradient-btn" (click)="goToQrScanner()">
+                <span class="btn-icon">📱</span>
+                Scan Your First QR Code
+              </button>
+            </div>
           </div>
         }
       </section>

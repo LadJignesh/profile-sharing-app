@@ -1,104 +1,193 @@
 <div class="qr-scanner-container">
-  <!-- Scanner Interface -->
-  <div class="scanner-card" *ngIf="!scannedProfile()">
-    <div class="scanner-header">
-      <h2>Scan QR Code</h2>
-      <p>Point your camera at a profile QR code to add the contact</p>
+  <!-- Modern Header -->
+  <header class="scanner-header">
+    <div class="header-content">
+      <div class="header-title">
+        <h1>📱 QR Scanner</h1>
+        <p class="header-subtitle">Instantly connect by scanning profile QR codes</p>
+      </div>
+      <button class="back-btn modern-btn" (click)="navigateToProfiles()">
+        <span class="btn-icon">←</span>
+        <span>Back</span>
+      </button>
     </div>
+  </header>
 
-    <div class="scanner-content">
-      <!-- Camera Preview -->
-      <div class="camera-container" *ngIf="isScanning()">
-        <video 
-          #videoElement 
-          autoplay 
-          playsinline
-          class="camera-preview">
-        </video>
-        <div class="scanner-overlay">
-          <div class="scanner-frame"></div>
-          <p class="scanner-instruction">Position QR code within the frame</p>
-        </div>
-      </div>
-
-      <!-- Start Scanner -->
-      <div class="scanner-start" *ngIf="!isScanning() && !error()">
-        <div class="scanner-icon">📱</div>
-        <h3>Ready to Scan</h3>
-        <p>Tap the button below to start your camera and scan a QR code</p>
-        <button class="btn-primary" (click)="startScanning()">
-          Start Camera
-        </button>
-      </div>
-
-      <!-- Error State -->
-      <div class="error-state" *ngIf="error()">
-        <div class="error-icon">⚠️</div>
-        <h3>Camera Error</h3>
-        <p>{{ error() }}</p>
-        <div class="error-actions">
-          <button class="btn-primary" (click)="startScanning()">
-            Try Again
-          </button>
-          <button class="btn-secondary" (click)="navigateToProfiles()">
-            Go Back
-          </button>
-        </div>
-      </div>
-
-      <!-- Scanner Controls -->
-      <div class="scanner-controls" *ngIf="isScanning()">
-        <button class="btn-secondary" (click)="stopScanning()">
-          Stop Scanning
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scanned Profile Preview -->
-  <div class="scanned-profile-card" *ngIf="scannedProfile()">
-    <div class="success-header">
-      <div class="success-icon">✅</div>
-      <h2>Profile Scanned Successfully!</h2>
-      <p>Review the profile details before adding to your contacts</p>
-    </div>
-
-    <div class="profile-preview">
-      <div class="profile-avatar">
-        {{ scannedProfile()?.name?.charAt(0)?.toUpperCase() }}
-      </div>
+  <div class="scanner-content">
+    <!-- Scanner Interface -->
+    <div class="scanner-card modern-card" *ngIf="!scannedProfile()">
+      <div class="card-ribbon scanner-ribbon">Scanner Active</div>
       
-      <div class="profile-details">
-        <h3>{{ scannedProfile()?.name }}</h3>
-        <div class="detail-item" *ngIf="scannedProfile()?.email">
-          <span class="detail-label">Email:</span>
-          <span class="detail-value">{{ scannedProfile()?.email }}</span>
+      <div class="scanner-main">
+        <!-- Camera Preview -->
+        <div class="camera-container modern-camera" *ngIf="isScanning()">
+          <div class="camera-frame">
+            <video 
+              #videoElement 
+              autoplay 
+              playsinline
+              class="camera-preview">
+            </video>
+            <div class="scanner-overlay">
+              <div class="scanner-frame animated-frame">
+                <div class="frame-corner top-left"></div>
+                <div class="frame-corner top-right"></div>
+                <div class="frame-corner bottom-left"></div>
+                <div class="frame-corner bottom-right"></div>
+                <div class="scanning-line"></div>
+              </div>
+              <div class="scanner-instruction">
+                <div class="instruction-icon pulse-icon">🎯</div>
+                <p>Align QR code within the frame</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="detail-item" *ngIf="scannedProfile()?.phone">
-          <span class="detail-label">Phone:</span>
-          <span class="detail-value">{{ scannedProfile()?.phone }}</span>
+
+        <!-- Start Scanner -->
+        <div class="scanner-start modern-empty" *ngIf="!isScanning() && !error()">
+          <div class="empty-illustration">
+            <div class="scanner-visual">
+              <div class="phone-frame">
+                <div class="phone-screen">
+                  <div class="qr-placeholder">
+                    <div class="qr-squares">
+                      <div class="qr-square"></div>
+                      <div class="qr-square"></div>
+                      <div class="qr-square"></div>
+                      <div class="qr-square"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="scan-rays">
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+              </div>
+            </div>
+          </div>
+          <div class="empty-content">
+            <h3>Ready to Connect!</h3>
+            <p>Position your device's camera towards a QR code to instantly add their profile to your network</p>
+            <button class="start-btn gradient-btn pulse" (click)="startScanning()">
+              <span class="btn-icon">📷</span>
+              <span>Start Camera</span>
+            </button>
+          </div>
         </div>
-        <div class="detail-item" *ngIf="scannedProfile()?.company">
-          <span class="detail-label">Company:</span>
-          <span class="detail-value">{{ scannedProfile()?.company }}</span>
+
+        <!-- Error State -->
+        <div class="error-state modern-empty error" *ngIf="error()">
+          <div class="empty-illustration">
+            <div class="error-visual">
+              <div class="error-circle">
+                <span class="error-icon">⚠️</span>
+              </div>
+            </div>
+          </div>
+          <div class="empty-content">
+            <h3>Camera Access Issue</h3>
+            <p>{{ error() }}</p>
+            <div class="error-actions">
+              <button class="retry-btn gradient-btn" (click)="startScanning()">
+                <span class="btn-icon">🔄</span>
+                <span>Try Again</span>
+              </button>
+              <button class="back-btn modern-btn secondary" (click)="navigateToProfiles()">
+                <span class="btn-icon">←</span>
+                <span>Go Back</span>
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="detail-item" *ngIf="scannedProfile()?.title">
-          <span class="detail-label">Title:</span>
-          <span class="detail-value">{{ scannedProfile()?.title }}</span>
+
+        <!-- Scanner Controls -->
+        <div class="scanner-controls modern-controls" *ngIf="isScanning()">
+          <button class="control-btn stop-btn" (click)="stopScanning()">
+            <span class="btn-icon">⏹️</span>
+            <span>Stop Scanning</span>
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="action-buttons">
-      <button class="btn-primary" (click)="addScannedProfile()">
-        Add to Contacts
-      </button>
-      <button class="btn-outline" (click)="scanAnother()">
-        Scan Another
-      </button>
-      <button class="btn-secondary" (click)="navigateToProfiles()">
-        View All Profiles
-      </button>
+    <!-- Scanned Profile Preview -->
+    <div class="scanned-profile-card modern-card success" *ngIf="scannedProfile()">
+      <div class="card-ribbon success-ribbon">Profile Found!</div>
+      
+      <div class="success-header">
+        <div class="success-visual">
+          <div class="success-circle">
+            <span class="success-icon">✅</span>
+          </div>
+          <div class="success-pulse"></div>
+        </div>
+        <div class="success-content">
+          <h2>Connection Successful!</h2>
+          <p>Profile scanned and ready to add to your network</p>
+        </div>
+      </div>
+
+      <div class="profile-preview modern-profile-preview">
+        <div class="profile-header">
+          <div class="profile-avatar large-avatar">
+            {{ scannedProfile()!.name.charAt(0).toUpperCase() }}
+          </div>
+          <div class="profile-basic">
+            <h3>{{ scannedProfile()?.name }}</h3>
+            <div class="profile-badges">
+              <span class="badge new-contact">New Contact</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile-details modern-details">
+          <div class="detail-item" *ngIf="scannedProfile()?.email">
+            <div class="detail-icon">📧</div>
+            <div class="detail-content">
+              <span class="detail-label">Email Address</span>
+              <span class="detail-value">{{ scannedProfile()?.email }}</span>
+            </div>
+          </div>
+          <div class="detail-item" *ngIf="scannedProfile()?.phone">
+            <div class="detail-icon">📱</div>
+            <div class="detail-content">
+              <span class="detail-label">Phone Number</span>
+              <span class="detail-value">{{ scannedProfile()?.phone }}</span>
+            </div>
+          </div>
+          <div class="detail-item" *ngIf="scannedProfile()?.company">
+            <div class="detail-icon">🏢</div>
+            <div class="detail-content">
+              <span class="detail-label">Company</span>
+              <span class="detail-value">{{ scannedProfile()?.company }}</span>
+            </div>
+          </div>
+          <div class="detail-item" *ngIf="scannedProfile()?.title">
+            <div class="detail-icon">💼</div>
+            <div class="detail-content">
+              <span class="detail-label">Job Title</span>
+              <span class="detail-value">{{ scannedProfile()?.title }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons modern-actions">
+        <button class="add-btn gradient-btn primary" (click)="addScannedProfile()">
+          <span class="btn-icon">➕</span>
+          <span>Add to Network</span>
+        </button>
+        <button class="scan-btn modern-btn secondary" (click)="scanAnother()">
+          <span class="btn-icon">📱</span>
+          <span>Scan Another</span>
+        </button>
+        <button class="view-btn modern-btn outline" (click)="navigateToProfiles()">
+          <span class="btn-icon">👥</span>
+          <span>View Network</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
